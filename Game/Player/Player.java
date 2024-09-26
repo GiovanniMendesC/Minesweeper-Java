@@ -8,11 +8,11 @@ public class Player {
     private int[] guess = new int[2];
 
     public void freeMap(int x, int y) {
-        viewMap[x][y] = 0;
+        viewMap[y][x] = 0;
     }
     
     public void freeMap(int[] position) {
-        viewMap[position[0]][position[1]] = 0;
+        viewMap[position[1]][position[0]] = 0;
     }
 
     public int[][] getViewMap() {

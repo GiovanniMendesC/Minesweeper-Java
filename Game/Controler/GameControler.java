@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 
 import static Game.Constants.Constants.BLOCK_SIZE;
 import static Game.Constants.Constants.MAP;
+import static Game.Constants.Constants.TAXA_TELA;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -19,34 +20,46 @@ import Game.Player.Player;
 import java.awt.event.ActionListener;
 
 public class GameControler extends JPanel implements ActionListener, KeyListener {
-    Player player = new Player();
-    Map bombMap = new Map();
-    boolean comecou = false;
-    
+    private Player player = new Player();
+    private Map bombMap = new Map();
+    private boolean comecou = false;
+    private boolean perdeu = false;
+    private Timer timer;
+    private int direcao = 0;// 1 cima
+                            // 2 baixo
+                            // 3 direita
+                            // 4 esquerda
+
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         System.out.println("key pressed: " + keyCode);
-        if (keyCode == KeyEvent.VK_RIGHT) {
-            comecou = true;
-        }
         if (keyCode == KeyEvent.VK_LEFT) {
-            comecou = true;
+            direcao = 1;
+            MoveAround(direcao);
+        }
+        if (keyCode == KeyEvent.VK_RIGHT) {
+            direcao = 2;
+            MoveAround(direcao);
 
         }
         if (keyCode == KeyEvent.VK_DOWN) {
-            comecou = true;
+            direcao = 3;
+            MoveAround(direcao);
 
         }
         if (keyCode == KeyEvent.VK_UP) {
-            comecou = true;
-
-        }
-        if (keyCode == KeyEvent.VK_SPACE) {
+            direcao = 4;
+            MoveAround(direcao);
 
         }
         if (keyCode == KeyEvent.VK_ENTER) {
-            
+            comecou = true;
+            if (!bombMap.HasBomb(player.getGuess())) {
+                Libera();
+            } else {
+                perdeu = true;
+            }
         }
     }
 
@@ -68,6 +81,13 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
         }
 
 
+        timer = new Timer(TAXA_TELA, e -> {
+            repaint();
+        });
+
+        timer.start();
+        addKeyListener(this);
+        setFocusable(true);
     }
 
     protected void paintComponent(Graphics g) {
@@ -133,11 +153,54 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
 
         //o que o player vai selecionar
         g.setColor(Color.CYAN);
-        g.fillRect((player.getGuess()[0]) * BLOCK_SIZE, (player.getGuess()[1]+1) * BLOCK_SIZE, BLOCK_SIZE, 5);
+        g.fillRect((player.getGuess()[0]) * BLOCK_SIZE, (player.getGuess()[1] + 1) * BLOCK_SIZE, BLOCK_SIZE, 5);
         g.fillRect((player.getGuess()[0]) * BLOCK_SIZE, player.getGuess()[1] * BLOCK_SIZE, BLOCK_SIZE, 5);
-        g.fillRect((player.getGuess()[0]+1) * BLOCK_SIZE, player.getGuess()[1] * BLOCK_SIZE, 5, BLOCK_SIZE+5);
+        g.fillRect((player.getGuess()[0] + 1) * BLOCK_SIZE, player.getGuess()[1] * BLOCK_SIZE, 5, BLOCK_SIZE + 5);
         g.fillRect((player.getGuess()[0]) * BLOCK_SIZE, player.getGuess()[1] * BLOCK_SIZE, 5, BLOCK_SIZE);
-        
-        
+
+    }
+    
+    public void MoveAround(int direcao) {
+        int[] posicao = new int[] { player.getGuess()[0], player.getGuess()[1] };
+        switch (direcao) {
+            case 1:
+                if (Map.CheckMapPosition(player.getGuess()[0] - 1, player.getGuess()[1]) == 0) {
+                    posicao[0]--;
+                }
+                break;
+            case 2:
+                if (Map.CheckMapPosition(player.getGuess()[0] + 1, player.getGuess()[1]) == 0) {
+                    posicao[0]++;
+                }
+                break;
+            case 3:
+                if (Map.CheckMapPosition(player.getGuess()[0], player.getGuess()[1] + 1) == 0) {
+                    posicao[1]++;
+                }
+                break;
+            case 4:
+                if (Map.CheckMapPosition(player.getGuess()[0], player.getGuess()[1] - 1) == 0) {
+                    posicao[1]--;
+                }
+                break;
+            default:
+                break;
+        }
+        player.setGuess(posicao);
+    }
+    
+    public void Libera() {
+        for (int i = player.getGuess()[0] - 1; i < player.getGuess()[0] + 2; i++) {
+            for (int j = player.getGuess()[1] - 1; j < player.getGuess()[1] + 2; j++) {
+                if (!bombMap.HasBomb(i, j)) {
+                    System.out.println("Liberou { " + i + ", " + j + " }");
+                    player.freeMap(i, j);
+                } else {
+                    System.out.println("Não liberou { " + i + ", " + j + " }");
+                }
+            }
+        }
+
+
     }
 }

@@ -7,6 +7,7 @@ public class Constants {
     public static final int LARGURA_TELA = 850;
     public static final int COMPRIMENTO_TELA = 850;
     public static final int BLOCK_SIZE = 50;
+    public static final int TAXA_TELA = 10;
 
     //Map
     public static final int[][] MAP = new int[][] {
