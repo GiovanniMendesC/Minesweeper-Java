@@ -10,6 +10,13 @@ public class Player {
     public void freeMap(int x, int y) {
         viewMap[y][x] = 0;
     }
+
+    public boolean IsFree(int x, int y) {
+        if (viewMap[y][x] == 0) {
+            return true;
+        }
+        return false;
+    }
     
     public void freeMap(int[] position) {
         viewMap[position[1]][position[0]] = 0;

@@ -7,6 +7,8 @@ import java.awt.event.KeyListener;
 
 import static Game.Constants.Constants.BLOCK_SIZE;
 import static Game.Constants.Constants.MAP;
+import static Game.Constants.Constants.MAX_ESPACO_LIBERAR;
+import static Game.Constants.Constants.MIN_ESPACO_LIBERAR;
 import static Game.Constants.Constants.TAXA_TELA;
 
 import java.awt.Color;
@@ -56,7 +58,7 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
         if (keyCode == KeyEvent.VK_ENTER) {
             comecou = true;
             if (!bombMap.HasBomb(player.getGuess())) {
-                Libera();
+                Libera(player.getGuess()[0], player.getGuess()[1]);
             } else {
                 perdeu = true;
             }
@@ -189,17 +191,28 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
         player.setGuess(posicao);
     }
     
-    public void Libera() {
-        for (int i = player.getGuess()[0] - 1; i < player.getGuess()[0] + 2; i++) {
-            for (int j = player.getGuess()[1] - 1; j < player.getGuess()[1] + 2; j++) {
-                if (!bombMap.HasBomb(i, j)) {
-                    System.out.println("Liberou { " + i + ", " + j + " }");
-                    player.freeMap(i, j);
-                } else {
-                    System.out.println("Não liberou { " + i + ", " + j + " }");
+    public void Libera(int x, int y) {
+        int aux = 0;
+        if (bombMap.BombsAround(x, y) == 0) {
+            for (int i = x - 1; i < x + 2; i++) {
+                for (int j = y - 1; j < y + 2; j++) {
+                    if (!bombMap.HasBomb(i, j)) {
+                        if(Map.CheckMapPosition(i, j)==0){
+                            if (bombMap.BombsAround(i, j) == 0 && !player.IsFree(i, j) && (i!=x && j!=y)) {
+                                Libera(i, j);
+                            }
+                            System.out.println("Liberou { " + i + ", " + j + " }");
+                            player.freeMap(i, j);
+                        }
+                    } else {
+                        System.out.println("Não liberou { " + i + ", " + j + " }");
+                    }
                 }
             }
+        } else {
+            player.freeMap(x, y);
         }
+        
 
 
     }

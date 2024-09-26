@@ -31,8 +31,8 @@ public class Constants {
     };
     public static final int MAX_BOMBAS = 45;
     public static final int MIN_BOMBAS = 25;
-    public static final int MAX_ESPACO_LIBERAR = 20;
-    public static final int MIN_ESPACO_LIBERAR = 10;
+    public static final int MAX_ESPACO_LIBERAR = 30;
+    public static final int MIN_ESPACO_LIBERAR = 20;
     public static final int RAIO_ESPACO_LIBERAR = 4;
     public static final int[] POSICAO_INCIAL = { 8, 8 };
 
