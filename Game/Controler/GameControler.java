@@ -7,8 +7,6 @@ import java.awt.event.KeyListener;
 
 import static Game.Constants.Constants.BLOCK_SIZE;
 import static Game.Constants.Constants.MAP;
-import static Game.Constants.Constants.MAX_ESPACO_LIBERAR;
-import static Game.Constants.Constants.MIN_ESPACO_LIBERAR;
 import static Game.Constants.Constants.TAXA_TELA;
 
 import java.awt.Color;
@@ -24,7 +22,6 @@ import java.awt.event.ActionListener;
 public class GameControler extends JPanel implements ActionListener, KeyListener {
     private Player player = new Player();
     private Map bombMap = new Map();
-    private boolean comecou = false;
     private boolean perdeu = false;
     private Timer timer;
     private int direcao = 0;// 1 cima
@@ -56,7 +53,6 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
 
         }
         if (keyCode == KeyEvent.VK_ENTER) {
-            comecou = true;
             if (!bombMap.HasBomb(player.getGuess())) {
                 Libera(player.getGuess()[0], player.getGuess()[1]);
             } else {
@@ -192,7 +188,6 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
     }
     
     public void Libera(int x, int y) {
-        int aux = 0;
         if (bombMap.BombsAround(x, y) == 0) {
             for (int i = x - 1; i < x + 2; i++) {
                 for (int j = y - 1; j < y + 2; j++) {

@@ -11,7 +11,7 @@ public class Painel {
     
     public static void GamePainel() {
         GameControler gc = new GameControler();
-        JFrame frame = new JFrame("Snake Game Console");
+        JFrame frame = new JFrame("Minesweeper Console");
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(LARGURA_TELA + 20, COMPRIMENTO_TELA + 55);

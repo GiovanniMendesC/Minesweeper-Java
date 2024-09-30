@@ -29,7 +29,7 @@ public class Constants {
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
-    public static final int MAX_BOMBAS = 45;
+    public static final int MAX_BOMBAS = 30;
     public static final int MIN_BOMBAS = 25;
     public static final int MAX_ESPACO_LIBERAR = 30;
     public static final int MIN_ESPACO_LIBERAR = 20;
