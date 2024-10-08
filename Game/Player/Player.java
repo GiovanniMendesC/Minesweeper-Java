@@ -6,9 +6,13 @@ import static Game.Constants.Constants.POSICAO_INCIAL;
 public class Player {
     private int[][] viewMap = new int[MAP.length][MAP[0].length];
     private int[] guess = new int[2];
+    private int quantidadeFaltando;
 
     public void freeMap(int x, int y) {
-        viewMap[y][x] = 0;
+        if (viewMap[y][x] != 0) {
+            viewMap[y][x] = 0;
+            quantidadeFaltando--;
+        }
     }
 
     public boolean IsFree(int x, int y) {
@@ -19,7 +23,10 @@ public class Player {
     }
     
     public void freeMap(int[] position) {
-        viewMap[position[1]][position[0]] = 0;
+        if (viewMap[position[1]][position[0]] != 0) {
+            viewMap[position[1]][position[0]] = 0;
+            quantidadeFaltando--;
+        }
     }
 
     public int[][] getViewMap() {
@@ -39,6 +46,16 @@ public class Player {
         this.guess = guess;
     }
 
+
+    public int getQuantidadeFaltando() {
+        return this.quantidadeFaltando;
+    }
+
+    public void setQuantidadeFaltando(int quantidadeFaltando) {
+        this.quantidadeFaltando = quantidadeFaltando;
+    }
+
+
     public Player() {
         for (int i = 0; i < MAP.length; i++) {
             for (int j = 0; j < MAP[0].length; j++) {
@@ -50,5 +67,6 @@ public class Player {
             }
         }
         guess = new int[] { POSICAO_INCIAL[0], POSICAO_INCIAL[1] };
+        quantidadeFaltando = (MAP.length-2) * (MAP[0].length-2);
     }
 }

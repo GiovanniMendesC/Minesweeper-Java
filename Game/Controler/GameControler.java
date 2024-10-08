@@ -23,6 +23,7 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
     private Player player = new Player();
     private Map bombMap = new Map();
     private boolean perdeu = false;
+    private boolean acabou = true;
     private Timer timer;
     private int direcao = 0;// 1 cima
                             // 2 baixo
@@ -32,7 +33,8 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        System.out.println("key pressed: " + keyCode);
+        System.out.println("Bombas presentes: " + bombMap.getBombas().length);
+        System.out.println("Bombas restantes: "+player.getQuantidadeFaltando());
         if (keyCode == KeyEvent.VK_LEFT) {
             direcao = 1;
             MoveAround(direcao);
@@ -56,6 +58,7 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
             if (!bombMap.HasBomb(player.getGuess())) {
                 Libera(player.getGuess()[0], player.getGuess()[1]);
             } else {
+                acabou = true;
                 perdeu = true;
             }
         }
@@ -156,6 +159,20 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
         g.fillRect((player.getGuess()[0] + 1) * BLOCK_SIZE, player.getGuess()[1] * BLOCK_SIZE, 5, BLOCK_SIZE + 5);
         g.fillRect((player.getGuess()[0]) * BLOCK_SIZE, player.getGuess()[1] * BLOCK_SIZE, 5, BLOCK_SIZE);
 
+        g.setColor(Color.WHITE);
+        g.drawString("Faltam: " + (player.getQuantidadeFaltando() - bombMap.getBombas().length), 1 * BLOCK_SIZE,
+                1 * BLOCK_SIZE);
+        
+        if (acabou) {
+            if (perdeu) {
+                repaint();
+                timer.stop();
+            } else {
+                repaint();
+                timer.stop();
+            }
+        }
+
     }
     
     public void MoveAround(int direcao) {
@@ -192,12 +209,13 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
             for (int i = x - 1; i < x + 2; i++) {
                 for (int j = y - 1; j < y + 2; j++) {
                     if (!bombMap.HasBomb(i, j)) {
-                        if(Map.CheckMapPosition(i, j)==0){
-                            if (bombMap.BombsAround(i, j) == 0 && !player.IsFree(i, j) && (i!=x && j!=y)) {
+                        if (Map.CheckMapPosition(i, j) == 0) {
+                            if (bombMap.BombsAround(i, j) == 0 && !player.IsFree(i, j) && (i != x && j != y)) {
                                 Libera(i, j);
                             }
                             System.out.println("Liberou { " + i + ", " + j + " }");
                             player.freeMap(i, j);
+                            
                         }
                     } else {
                         System.out.println("Não liberou { " + i + ", " + j + " }");
@@ -206,9 +224,16 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
             }
         } else {
             player.freeMap(x, y);
+            
         }
-        
 
+        VerifyIfEnd();
 
+    }
+    
+    public void VerifyIfEnd() {
+        if (player.getQuantidadeFaltando() == bombMap.getBombas().length) {
+            acabou = true;
+        }
     }
 }
