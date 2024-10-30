@@ -9,22 +9,22 @@ public class Player {
     private int quantidadeFaltando;
 
     public void freeMap(int x, int y) {
-        if (viewMap[y][x] != 0) {
-            viewMap[y][x] = 0;
+        if (viewMap[x][y] != 0) {
+            viewMap[x][y] = 0;
             quantidadeFaltando--;
         }
     }
 
     public boolean IsFree(int x, int y) {
-        if (viewMap[y][x] == 0) {
+        if (viewMap[x][y] == 0) {
             return true;
         }
         return false;
     }
-    
+
     public void freeMap(int[] position) {
-        if (viewMap[position[1]][position[0]] != 0) {
-            viewMap[position[1]][position[0]] = 0;
+        if (viewMap[position[0]][position[1]] != 0) {
+            viewMap[position[0]][position[1]] = 0;
             quantidadeFaltando--;
         }
     }
@@ -37,7 +37,6 @@ public class Player {
         this.viewMap = viewMap;
     }
 
-
     public int[] getGuess() {
         return this.guess;
     }
@@ -46,7 +45,6 @@ public class Player {
         this.guess = guess;
     }
 
-
     public int getQuantidadeFaltando() {
         return this.quantidadeFaltando;
     }
@@ -54,7 +52,6 @@ public class Player {
     public void setQuantidadeFaltando(int quantidadeFaltando) {
         this.quantidadeFaltando = quantidadeFaltando;
     }
-
 
     public Player() {
         for (int i = 0; i < MAP.length; i++) {
@@ -67,6 +64,6 @@ public class Player {
             }
         }
         guess = new int[] { POSICAO_INCIAL[0], POSICAO_INCIAL[1] };
-        quantidadeFaltando = (MAP.length-2) * (MAP[0].length-2);
+        quantidadeFaltando = (MAP.length - 2) * (MAP[0].length - 2);
     }
 }

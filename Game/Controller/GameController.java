@@ -1,4 +1,4 @@
-package Game.Controler;
+package Game.Controller;
 
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
@@ -19,7 +19,7 @@ import Game.Player.Player;
 
 import java.awt.event.ActionListener;
 
-public class GameControler extends JPanel implements ActionListener, KeyListener {
+public class GameController extends JPanel implements ActionListener, KeyListener {
     private Player player = new Player();
     private Map bombMap = new Map();
     private boolean perdeu = false;
@@ -34,7 +34,7 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         System.out.println("Bombas presentes: " + bombMap.getBombas().length);
-        System.out.println("Bombas restantes: "+player.getQuantidadeFaltando());
+        System.out.println("Bombas restantes: " + player.getQuantidadeFaltando());
         if (keyCode == KeyEvent.VK_LEFT) {
             direcao = 1;
             MoveAround(direcao);
@@ -54,7 +54,7 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
             MoveAround(direcao);
 
         }
-        if (keyCode == KeyEvent.VK_ENTER) {
+        if (keyCode == KeyEvent.VK_SPACE || keyCode == KeyEvent.VK_ENTER) {
             if (!bombMap.HasBomb(player.getGuess())) {
                 Libera(player.getGuess()[0], player.getGuess()[1]);
             } else {
@@ -76,11 +76,10 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
     public void keyTyped(KeyEvent e) {
     }
 
-    public GameControler() {
+    public GameController() {
         for (int i = 0; i < bombMap.getBombas().length; i++) {
             bombMap.GenerateBomb();
         }
-
 
         timer = new Timer(TAXA_TELA, e -> {
             repaint();
@@ -94,20 +93,20 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
     protected void paintComponent(Graphics g) {
         Font font = new Font("Arial", Font.PLAIN, BLOCK_SIZE);
 
-        //Fundo do mapa
+        // Fundo do mapa
         for (int i = 0; i < MAP.length; i++) {
             for (int j = 0; j < MAP[0].length; j++) {
                 if (Map.CheckMapPosition(i, j) == 0) {
                     g.setColor(Color.LIGHT_GRAY);
-                    g.fillRect(j * BLOCK_SIZE, i * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                    g.fillRect(i * BLOCK_SIZE, j * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                 } else {
                     g.setColor(Color.BLUE);
-                    g.fillRect(j * BLOCK_SIZE, i * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+                    g.fillRect(i * BLOCK_SIZE, j * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                 }
             }
         }
 
-        //Números
+        // Números
         for (int i = 1; i < MAP.length - 1; i++) {
             for (int j = 1; j < MAP[0].length - 1; j++) {
                 if (bombMap.HasBomb(i, j)) {
@@ -142,17 +141,17 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
             }
         }
 
-        //O que o player consegue ver
+        // O que o player consegue ver
         for (int i = 0; i < player.getViewMap().length; i++) {
             for (int j = 0; j < player.getViewMap()[0].length; j++) {
                 if (player.getViewMap()[i][j] == 1) {
                     g.setColor(Color.GREEN);
-                    g.fillRect(j * 50, i * 50, BLOCK_SIZE, BLOCK_SIZE);
+                    g.fillRect(i * 50, j * 50, BLOCK_SIZE, BLOCK_SIZE);
                 }
             }
         }
 
-        //o que o player vai selecionar
+        // o que o player vai selecionar
         g.setColor(Color.CYAN);
         g.fillRect((player.getGuess()[0]) * BLOCK_SIZE, (player.getGuess()[1] + 1) * BLOCK_SIZE, BLOCK_SIZE, 5);
         g.fillRect((player.getGuess()[0]) * BLOCK_SIZE, player.getGuess()[1] * BLOCK_SIZE, BLOCK_SIZE, 5);
@@ -162,7 +161,7 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
         g.setColor(Color.WHITE);
         g.drawString("Faltam: " + (player.getQuantidadeFaltando() - bombMap.getBombas().length), 1 * BLOCK_SIZE,
                 1 * BLOCK_SIZE);
-        
+
         if (acabou) {
             if (perdeu) {
                 repaint();
@@ -174,7 +173,7 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
         }
 
     }
-    
+
     public void MoveAround(int direcao) {
         int[] posicao = new int[] { player.getGuess()[0], player.getGuess()[1] };
         switch (direcao) {
@@ -203,7 +202,7 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
         }
         player.setGuess(posicao);
     }
-    
+
     public void Libera(int x, int y) {
         if (bombMap.BombsAround(x, y) == 0) {
             for (int i = x - 1; i < x + 2; i++) {
@@ -215,7 +214,7 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
                             }
                             System.out.println("Liberou { " + i + ", " + j + " }");
                             player.freeMap(i, j);
-                            
+
                         }
                     } else {
                         System.out.println("Não liberou { " + i + ", " + j + " }");
@@ -224,13 +223,13 @@ public class GameControler extends JPanel implements ActionListener, KeyListener
             }
         } else {
             player.freeMap(x, y);
-            
+
         }
 
         VerifyIfEnd();
 
     }
-    
+
     public void VerifyIfEnd() {
         if (player.getQuantidadeFaltando() == bombMap.getBombas().length) {
             acabou = true;

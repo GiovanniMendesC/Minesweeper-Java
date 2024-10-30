@@ -5,12 +5,12 @@ import static Game.Constants.Constants.LARGURA_TELA;
 
 import javax.swing.JFrame;
 
-import Game.Controler.GameControler;
+import Game.Controller.GameController;
 
 public class Painel {
-    
+
     public static void GamePainel() {
-        GameControler gc = new GameControler();
+        GameController gc = new GameController();
         JFrame frame = new JFrame("Minesweeper Console");
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

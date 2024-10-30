@@ -10,8 +10,8 @@ public class Map {
     private int contador = 0;
 
     public void GenerateBomb() {
-        int x = (int) (Math.random() * 14 + 1);
-        int y = (int) (Math.random() * 14 + 1);
+        int x = (int) (Math.random() * (MAP.length - 3) + 1);
+        int y = (int) (Math.random() * (MAP[0].length - 3) + 1);
 
         if (ValidateBombPosition(x, y)) {
             AddBomb(x, y);
@@ -19,7 +19,7 @@ public class Map {
             GenerateBomb();
         }
     }
-    
+
     public boolean ValidateBombPosition(int x, int y) {
         if (CheckMapPosition(x, y) == 0) {
             for (int i = 0; i < contador; i++) {
@@ -33,7 +33,7 @@ public class Map {
         }
         return false;
     }
-    
+
     public void AddBomb(int x, int y) {
         bombas[contador][0] = x;
         bombas[contador][1] = y;
@@ -58,7 +58,7 @@ public class Map {
         }
         return false;
     }
-    
+
     public int BombsAround(int x, int y) {
         int soma = 0;
         for (int i = x - 1; i < x + 2; i++) {
@@ -87,15 +87,13 @@ public class Map {
         return soma;
     }
 
-
     public static int CheckMapPosition(int x, int y) {
         return MAP[x][y];
     }
-    
+
     public static int CheckMapPosition(int[] xy) {
         return MAP[xy[0]][xy[1]];
     }
-
 
     public int[][] getBombas() {
         return this.bombas;
