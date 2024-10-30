@@ -30,6 +30,7 @@ public class GameController extends JPanel implements ActionListener, KeyListene
                             // 3 direita
                             // 4 esquerda
 
+    // Colocando as Keys para setar as direções e os comandos do jogador
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
@@ -76,6 +77,7 @@ public class GameController extends JPanel implements ActionListener, KeyListene
     public void keyTyped(KeyEvent e) {
     }
 
+    // Inicia o timer e o mapa de bombas
     public GameController() {
         for (int i = 0; i < bombMap.getBombas().length; i++) {
             bombMap.GenerateBomb();
@@ -90,6 +92,7 @@ public class GameController extends JPanel implements ActionListener, KeyListene
         setFocusable(true);
     }
 
+    // Desenha os components da tela
     protected void paintComponent(Graphics g) {
         Font font = new Font("Arial", Font.PLAIN, BLOCK_SIZE);
 
@@ -158,10 +161,12 @@ public class GameController extends JPanel implements ActionListener, KeyListene
         g.fillRect((player.getGuess()[0] + 1) * BLOCK_SIZE, player.getGuess()[1] * BLOCK_SIZE, 5, BLOCK_SIZE + 5);
         g.fillRect((player.getGuess()[0]) * BLOCK_SIZE, player.getGuess()[1] * BLOCK_SIZE, 5, BLOCK_SIZE);
 
+        // Quantas bombas faltam
         g.setColor(Color.WHITE);
         g.drawString("Faltam: " + (player.getQuantidadeFaltando() - bombMap.getBombas().length), 1 * BLOCK_SIZE,
                 1 * BLOCK_SIZE);
 
+        // Verifica se o jogo acabou
         if (acabou) {
             if (perdeu) {
                 repaint();
@@ -174,6 +179,7 @@ public class GameController extends JPanel implements ActionListener, KeyListene
 
     }
 
+    // Faz a movimentação do jogador
     public void MoveAround(int direcao) {
         int[] posicao = new int[] { player.getGuess()[0], player.getGuess()[1] };
         switch (direcao) {
@@ -203,6 +209,7 @@ public class GameController extends JPanel implements ActionListener, KeyListene
         player.setGuess(posicao);
     }
 
+    // Libera ou não o espaço selecionado no mapa
     public void Libera(int x, int y) {
         if (bombMap.BombsAround(x, y) == 0) {
             for (int i = x - 1; i < x + 2; i++) {
@@ -230,6 +237,7 @@ public class GameController extends JPanel implements ActionListener, KeyListene
 
     }
 
+    // Verifica se acabou o jogo
     public void VerifyIfEnd() {
         if (player.getQuantidadeFaltando() == bombMap.getBombas().length) {
             acabou = true;

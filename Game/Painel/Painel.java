@@ -9,6 +9,7 @@ import Game.Controller.GameController;
 
 public class Painel {
 
+    // Cria a janela com os componentes
     public static void GamePainel() {
         GameController gc = new GameController();
         JFrame frame = new JFrame("Minesweeper Console");

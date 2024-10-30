@@ -9,6 +9,7 @@ public class Map {
     private int[][] bombas;
     private int contador = 0;
 
+    // Gera uma bomba
     public void GenerateBomb() {
         int x = (int) (Math.random() * (MAP.length - 3) + 1);
         int y = (int) (Math.random() * (MAP[0].length - 3) + 1);
@@ -20,6 +21,7 @@ public class Map {
         }
     }
 
+    // Verifica se a posição (x, y) da bomba é valida
     public boolean ValidateBombPosition(int x, int y) {
         if (CheckMapPosition(x, y) == 0) {
             for (int i = 0; i < contador; i++) {
@@ -34,6 +36,7 @@ public class Map {
         return false;
     }
 
+    // Adiciona a bomba no array de bombas e soma no contador
     public void AddBomb(int x, int y) {
         bombas[contador][0] = x;
         bombas[contador][1] = y;
@@ -41,6 +44,7 @@ public class Map {
         System.out.println(contador + ": { " + x + ", " + y + " }");
     }
 
+    // Verifica se a poisição (x, y) tem uma bomba ou não
     public boolean HasBomb(int x, int y) {
         for (int i = 0; i < contador; i++) {
             if (bombas[i][0] == x && bombas[i][1] == y) {
@@ -50,6 +54,7 @@ public class Map {
         return false;
     }
 
+    // Verifica se a posição (x, y) tem uma bomba ou não
     public boolean HasBomb(int[] position) {
         for (int i = 0; i < contador; i++) {
             if (bombas[i][0] == position[0] && bombas[i][1] == position[1]) {
@@ -59,6 +64,7 @@ public class Map {
         return false;
     }
 
+    // Verifica quantas bombas tem ao redor da poisção (x, y)
     public int BombsAround(int x, int y) {
         int soma = 0;
         for (int i = x - 1; i < x + 2; i++) {
@@ -73,6 +79,7 @@ public class Map {
         return soma;
     }
 
+    // Verifica quantas bombas tem ao redor da posição (x, y)
     public int BombsAround(int[] position) {
         int soma = 0;
         for (int i = position[0] - 1; i < position[0] + 2; i++) {
@@ -111,6 +118,7 @@ public class Map {
         this.contador = contador;
     }
 
+    // Inicializa a classe com a quantidade de bombas definidas
     public Map() {
         int aux = (int) (Math.random() * (MAX_BOMBAS - MIN_BOMBAS) + MIN_BOMBAS);
         bombas = new int[aux][2];

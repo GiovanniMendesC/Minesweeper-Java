@@ -8,6 +8,7 @@ public class Player {
     private int[] guess = new int[2];
     private int quantidadeFaltando;
 
+    // Libera a posição no mapa que bloqueia a visão do jogador
     public void freeMap(int x, int y) {
         if (viewMap[x][y] != 0) {
             viewMap[x][y] = 0;
@@ -15,18 +16,20 @@ public class Player {
         }
     }
 
-    public boolean IsFree(int x, int y) {
-        if (viewMap[x][y] == 0) {
-            return true;
-        }
-        return false;
-    }
-
+    // Liberaa posição do mapa que bloqueia a visão do jogador
     public void freeMap(int[] position) {
         if (viewMap[position[0]][position[1]] != 0) {
             viewMap[position[0]][position[1]] = 0;
             quantidadeFaltando--;
         }
+    }
+
+    // Verifica se a posição está liberada ou não
+    public boolean IsFree(int x, int y) {
+        if (viewMap[x][y] == 0) {
+            return true;
+        }
+        return false;
     }
 
     public int[][] getViewMap() {
@@ -53,6 +56,8 @@ public class Player {
         this.quantidadeFaltando = quantidadeFaltando;
     }
 
+    // Inicializa a classe com o mapa de visualização inverso ao do mapa de jogo
+    // e seta a posição inicial e a quantidade de espaços não liberados do mapa
     public Player() {
         for (int i = 0; i < MAP.length; i++) {
             for (int j = 0; j < MAP[0].length; j++) {
