@@ -23,7 +23,7 @@ public class GameController extends JPanel implements ActionListener, KeyListene
     private Player player = new Player();
     private Map bombMap = new Map();
     private boolean perdeu = false;
-    private boolean acabou = true;
+    private boolean acabou = false;
     private Timer timer;
     private int direcao = 0;// 1 cima
                             // 2 baixo
@@ -88,6 +88,17 @@ public class GameController extends JPanel implements ActionListener, KeyListene
 
         timer = new Timer(TAXA_TELA, e -> {
             repaint();
+
+            // Verifica se o jogo acabou
+            if (acabou) {
+                if (perdeu) {
+                    repaint();
+                    timer.stop();
+                } else {
+                    repaint();
+                    timer.stop();
+                }
+            }
         });
 
         timer.start();
@@ -172,16 +183,6 @@ public class GameController extends JPanel implements ActionListener, KeyListene
         g.drawString("Faltam: " + (player.getQuantidadeFaltando() - bombMap.getBombas().length), 1 * BLOCK_SIZE,
                 1 * BLOCK_SIZE);
 
-        // Verifica se o jogo acabou
-        if (acabou) {
-            if (perdeu) {
-                repaint();
-                timer.stop();
-            } else {
-                repaint();
-                timer.stop();
-            }
-        }
 
     }
 
@@ -238,15 +239,14 @@ public class GameController extends JPanel implements ActionListener, KeyListene
             player.freeMap(x, y);
 
         }
-
         VerifyIfEnd();
-
     }
 
     // Verifica se acabou o jogo
     public void VerifyIfEnd() {
         if (player.getQuantidadeFaltando() == bombMap.getBombas().length) {
             acabou = true;
+            System.out.println("acabou");
         }
     }
 }
