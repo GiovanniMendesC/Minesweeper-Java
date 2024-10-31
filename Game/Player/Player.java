@@ -32,6 +32,12 @@ public class Player {
         return false;
     }
 
+    public void markUnmarkBomb(int x, int y) {
+        if (!IsFree(x, y)) {
+            viewMap[x][y] = viewMap[x][y] == -1 ? 1 : -1;
+        }
+    }
+
     public int[][] getViewMap() {
         return this.viewMap;
     }

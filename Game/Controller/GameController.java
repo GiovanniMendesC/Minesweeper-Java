@@ -63,6 +63,9 @@ public class GameController extends JPanel implements ActionListener, KeyListene
                 perdeu = true;
             }
         }
+        if (keyCode == KeyEvent.VK_F) {
+            player.markUnmarkBomb(player.getGuess()[0], player.getGuess()[1]);
+        }
     }
 
     @Override
@@ -149,6 +152,9 @@ public class GameController extends JPanel implements ActionListener, KeyListene
             for (int j = 0; j < player.getViewMap()[0].length; j++) {
                 if (player.getViewMap()[i][j] == 1) {
                     g.setColor(Color.GREEN);
+                    g.fillRect(i * 50, j * 50, BLOCK_SIZE, BLOCK_SIZE);
+                } else if (player.getViewMap()[i][j] == -1) {
+                    g.setColor(Color.RED);
                     g.fillRect(i * 50, j * 50, BLOCK_SIZE, BLOCK_SIZE);
                 }
             }
