@@ -1,3 +1,4 @@
+package Game;
 import Game.Painel.Painel;
 
 public class MinesweeperApp {
