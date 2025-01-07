@@ -129,7 +129,7 @@ public class GameController extends JPanel implements ActionListener, KeyListene
                 if (bombMap.HasBomb(i, j)) {
                     g.setColor(Color.white);
                     g.setFont(font);
-                    g.drawString("X", i * BLOCK_SIZE + 15, (j + 1) * BLOCK_SIZE);
+                    g.drawString("X", i * BLOCK_SIZE + BLOCK_SIZE/3, (j + 1) * BLOCK_SIZE);
                 } else {
                     int bombas = bombMap.BombsAround(i, j);
                     switch (bombas) {
@@ -153,7 +153,7 @@ public class GameController extends JPanel implements ActionListener, KeyListene
                             break;
                     }
                     g.setFont(font);
-                    g.drawString(Integer.toString(bombas), i * BLOCK_SIZE + 15, (j + 1) * BLOCK_SIZE);
+                    g.drawString(Integer.toString(bombas), i * BLOCK_SIZE + BLOCK_SIZE/3, (j + 1) * BLOCK_SIZE);
                 }
             }
         }
@@ -163,10 +163,10 @@ public class GameController extends JPanel implements ActionListener, KeyListene
             for (int j = 0; j < player.getViewMap()[0].length; j++) {
                 if (player.getViewMap()[i][j] == 1) {
                     g.setColor(Color.GREEN);
-                    g.fillRect(i * 50, j * 50, BLOCK_SIZE, BLOCK_SIZE);
+                    g.fillRect(i * BLOCK_SIZE, j * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                 } else if (player.getViewMap()[i][j] == -1) {
                     g.setColor(Color.RED);
-                    g.fillRect(i * 50, j * 50, BLOCK_SIZE, BLOCK_SIZE);
+                    g.fillRect(i * BLOCK_SIZE, j * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                 }
             }
         }
@@ -180,8 +180,7 @@ public class GameController extends JPanel implements ActionListener, KeyListene
 
         // Quantas bombas faltam
         g.setColor(Color.WHITE);
-        g.drawString("Faltam: " + (player.getQuantidadeFaltando() - bombMap.getBombas().length), 1 * BLOCK_SIZE,
-                1 * BLOCK_SIZE);
+        g.drawString("Faltam: " + (player.getQuantidadeFaltando() - bombMap.getBombas().length), BLOCK_SIZE, (int)(BLOCK_SIZE * 0.80));
 
 
     }

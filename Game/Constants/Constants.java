@@ -28,8 +28,8 @@ public class Constants {
     public static final int[] POSICAO_INCIAL = { (int) (MAP.length / 2), (int) (MAP[0].length / 2) };
 
     // Game
-    public static final int LARGURA_TELA = MAP.length * 50;
-    public static final int COMPRIMENTO_TELA = MAP[0].length * 50;
-    public static final int BLOCK_SIZE = 50;
+    public static final int BLOCK_SIZE = 35;
+    public static final int LARGURA_TELA = MAP.length * BLOCK_SIZE;
+    public static final int COMPRIMENTO_TELA = MAP[0].length * BLOCK_SIZE;
     public static final int TAXA_TELA = 100;
 }
